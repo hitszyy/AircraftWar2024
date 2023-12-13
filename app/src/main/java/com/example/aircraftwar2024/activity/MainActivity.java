@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         Button startBtn = findViewById(R.id.startBtn);
-        Button exitBtn = findViewById(R.id.exitBtn);
+
         RadioButton onBtn = findViewById(R.id.startMusic);
         RadioButton offBtn = findViewById(R.id.closeMusic);
         startBtn.setOnClickListener(this);
-        exitBtn.setOnClickListener(this);
+
 
         if(onBtn.isChecked()){
             isMusicOn = true;
@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, OfflineActivity.class);
             intent.putExtra("music", isMusicOn);
             startActivity(intent);
-        }else if(v.getId() == R.id.exitBtn) {
-            finish();
         }
     }
 }

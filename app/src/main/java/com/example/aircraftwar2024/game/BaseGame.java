@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import androidx.annotation.NonNull;
+import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.ImageManager;
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.aircraft.AbstractAircraft;
@@ -21,12 +23,16 @@ import com.example.aircraftwar2024.aircraft.BossEnemy;
 import com.example.aircraftwar2024.aircraft.HeroAircraft;
 import com.example.aircraftwar2024.basic.AbstractFlyingObject;
 import com.example.aircraftwar2024.bullet.AbstractBullet;
-import com.example.aircraftwar2024.basic.factory.enemy_factory.BossFactory;
-import com.example.aircraftwar2024.basic.factory.enemy_factory.EliteFactory;
-import com.example.aircraftwar2024.basic.factory.enemy_factory.EnemyFactory;
-import com.example.aircraftwar2024.basic.factory.enemy_factory.MobFactory;
+import com.example.aircraftwar2024.factory.enemy_factory.BossFactory;
+import com.example.aircraftwar2024.factory.enemy_factory.EliteFactory;
+import com.example.aircraftwar2024.factory.enemy_factory.EnemyFactory;
+import com.example.aircraftwar2024.factory.enemy_factory.MobFactory;
+import com.example.aircraftwar2024.record.UserRecord;
+import com.example.aircraftwar2024.record.UserRecordController;
 import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
 import com.example.aircraftwar2024.supply.BombSupply;
+
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -93,7 +99,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      */
     private final int timeInterval = 16;
 
-    private final HeroAircraft heroAircraft;
+    private  HeroAircraft heroAircraft;
 
     protected final List<AbstractEnemyAircraft> enemyAircrafts;
     private final List<AbstractFlyingSupply> flyingSupplies;
@@ -143,6 +149,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         mSurfaceHolder.addCallback(this);
         this.setFocusable(true);
         ImageManager.initImage(context);
+
+
 
         // 初始化英雄机
         heroAircraft = HeroAircraft.getHeroAircraft();
@@ -433,7 +441,11 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
             mbLoop = false;
-            Log.i(TAG, "heroAircraft is not Valid");
+
+            //添加用户数据
+            //显示排行榜分数
+
+            Log.i(TAG, "heroAircraft is not Valid ");
         }
 
     }
@@ -503,6 +515,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
+        mbLoop  = true;
         new Thread(this).start();
         Log.i(TAG, "start surface view thread");
     }
@@ -526,8 +539,10 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                 draw();
             //}
         }
+        UserRecord record = new UserRecord("test",this.score,new Date().toString());
         Message message = Message.obtain();
         message.what = 1 ;
+        message.obj = record;
         handler.sendMessage(message);
     }
 }

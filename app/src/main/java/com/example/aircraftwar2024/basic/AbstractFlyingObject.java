@@ -1,6 +1,7 @@
 package com.example.aircraftwar2024.basic;
 
 import android.graphics.Bitmap;
+import android.media.Image;
 
 import com.example.aircraftwar2024.ImageManager;
 import com.example.aircraftwar2024.activity.GameActivity;
@@ -175,7 +176,8 @@ public abstract class AbstractFlyingObject {
     public int getHeight() {
         if (height == -1){
             // 若未设置，则查询图片高度并设置
-            height = ImageManager.get(this).getHeight();
+            if(ImageManager.get(this) != null)
+                height = ImageManager.get(this).getHeight();
         }
         return height;
     }
