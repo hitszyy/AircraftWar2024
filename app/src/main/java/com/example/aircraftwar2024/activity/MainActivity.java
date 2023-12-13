@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 import com.example.aircraftwar2024.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private boolean isMusicOn = true;
+    private boolean isMusicOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
