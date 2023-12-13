@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private boolean isMusicOn = false;
+    private boolean isMusicOn = true;
     private RadioButton onBtn;
     private RadioButton offBtn;
 
